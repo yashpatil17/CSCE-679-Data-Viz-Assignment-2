@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 2 Heatmap</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="stylesheet" href="level2.css">
+</head>
+
+<body>
+    <div class="toggle-container">
+        <span class="toggle-label">Min</span>
+        <label class="toggle-switch">
+            <input type="checkbox" id="tempToggle">
+            <span class="slider"></span>
+        </label>
+        <span class="toggle-label-right">Max</span>
+    </div>
+
+    <div style="position: relative;">
+        <svg id="heatmap"></svg>
+        <div class="tooltip" style="display: none;"></div>
+        <svg id="legend"></svg>
+        <svg id="lineLegend"></svg>
+    </div>
+
+    <script src="level2.js"></script>
+</body>
+
+</html>
