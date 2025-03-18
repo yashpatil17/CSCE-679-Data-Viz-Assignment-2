@@ -3,14 +3,16 @@
 ## Screenshots
 
 ### Level 1
+<img width="1120" alt="2025-03-17 20_46_16-Greenshot" src="https://github.com/user-attachments/assets/d041bf23-ff23-4598-bd49-9903aa9601ce" />
+<br/>
 
-<img width="1120" alt="2025-03-17 14_17_59-Greenshot" src="https://github.com/user-attachments/assets/91ff1477-e2e1-44a1-b34e-52fcde60ad1a" /> <br/>
-
-<img width="1120" alt="2025-03-17 14_17_42-Greenshot" src="https://github.com/user-attachments/assets/c3796c04-ef66-411f-adae-d58b5694d49a" />  
+<img width="1120" alt="2025-03-17 20_46_10-Greenshot" src="https://github.com/user-attachments/assets/298bad6d-863a-4b11-9246-bed146a1f73a" />
+ 
 
 ### Level 2
 
-<img width="1120" alt="2025-03-17 14_18_34-Greenshot" src="https://github.com/user-attachments/assets/a6e1155f-bfa0-4ffa-97c2-23fe1ec0f119" /> <br/>
+<img width="1120" alt="2025-03-17 20_46_50-Greenshot" src="https://github.com/user-attachments/assets/af50373e-c4f7-4455-96db-eebf7d83f9e4" />
+<br/>
 
-<img width="1120" alt="2025-03-17 14_18_24-Greenshot" src="https://github.com/user-attachments/assets/8c948c57-98bb-4337-b7ac-3ce9482c021a" />
+<img width="1120" alt="2025-03-17 20_47_03-Greenshot" src="https://github.com/user-attachments/assets/bb41871b-6001-449b-950a-3f5383866b90" />
 
