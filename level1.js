@@ -3,6 +3,7 @@ const margin = { top: 50, right: 50, bottom: 50, left: 100 };
 const width = 800 - margin.left - margin.right;
 const height = 500 - margin.top - margin.bottom;
 
+// Create the main SVG container
 const svg = d3.select("#heatmap")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -13,11 +14,12 @@ const svg = d3.select("#heatmap")
 let currentMetric = "max_temperature";
 document.getElementById("tempToggle").checked = true;
 
-// Get the existing tooltip
+// Select tooltip element for displaying data on hover
 const tooltip = d3.select(".tooltip");
 
 // Load CSV data
 d3.csv("temperature_daily.csv").then(data => {
+    // Parse date and convert temperature values to numbers
     data.forEach(d => {
         let [year, month, day] = d.date.split("-").map(Number);
         d.year = year;
@@ -26,7 +28,7 @@ d3.csv("temperature_daily.csv").then(data => {
         d.min_temperature = +d.min_temperature;
     });
 
-    // Aggregate by year and month
+    // Aggregate temperature data by year and month
     let aggregatedData = d3.rollup(
         data,
         v => ({
@@ -36,7 +38,7 @@ d3.csv("temperature_daily.csv").then(data => {
         d => d.year, d => d.month
     );
 
-    // Convert aggregated data to an array
+    // Convert aggregated data to an array for easier processing
     let heatmapData = [];
     aggregatedData.forEach((months, year) => {
         months.forEach((temps, month) => {
@@ -52,21 +54,19 @@ d3.csv("temperature_daily.csv").then(data => {
     const years = [...new Set(heatmapData.map(d => d.year))].sort((a, b) => a - b);
     const months = d3.range(1, 13);
 
-    // Initial min max temps
+    // Compute initial min and max values for color scale
     const initialMin = d3.min(heatmapData, d => currentMetric === "max_temperature" ? d.max_temperature : d.min_temperature);
     const initialMax = d3.max(heatmapData, d => currentMetric === "max_temperature" ? d.max_temperature : d.min_temperature);
 
-    // Scales
+    // Define scales
     const xScale = d3.scaleBand().domain(years).range([0, width]).padding(0.05);
     const yScale = d3.scaleBand().domain(months).range([0, height]).padding(0.05);
-
     const colorScale = d3.scaleSequential(d3.interpolateYlOrRd)
         .domain([initialMin, initialMax]);
 
     // LEGEND SETUP
     const legendWidth = 300;
     const legendHeight = 20;
-
     const legendSvg = d3.select("#legend")
         .attr("width", legendWidth + 40)
         .attr("height", 70)
@@ -79,13 +79,14 @@ d3.csv("temperature_daily.csv").then(data => {
 
     const legendAxis = d3.axisBottom(legendScale).ticks(5).tickFormat(d3.format(".1f"));
 
-    // Create gradient
+    // Create gradient for legend
     const defs = legendSvg.append("defs");
     const linearGradient = defs.append("linearGradient")
         .attr("id", "legendGradient")
         .attr("x1", "0%").attr("y1", "0%")
         .attr("x2", "100%").attr("y2", "0%");
 
+    // Define gradient stops for color transition
     linearGradient.selectAll("stop")
         .data([
             { offset: "0%", color: d3.interpolateYlOrRd(0) },
@@ -96,11 +97,13 @@ d3.csv("temperature_daily.csv").then(data => {
         .attr("offset", d => d.offset)
         .attr("stop-color", d => d.color);
 
+    // Draw legend gradient
     legendSvg.append("rect")
         .attr("width", legendWidth)
         .attr("height", legendHeight)
         .style("fill", "url(#legendGradient)");
 
+    // Add legend axis and labels
     legendSvg.append("g")
         .attr("transform", `translate(0, ${legendHeight})`)
         .call(legendAxis);
@@ -131,7 +134,7 @@ d3.csv("temperature_daily.csv").then(data => {
         .style("font-size", "10px")
         .text("Temperature Range (°C)");
 
-    // Draw cells
+    // Draw heatmap cells
     const cells = svg.selectAll(".cell")
         .data(heatmapData)
         .enter().append("rect")
@@ -141,6 +144,7 @@ d3.csv("temperature_daily.csv").then(data => {
         .attr("width", xScale.bandwidth())
         .attr("height", yScale.bandwidth())
         .attr("fill", d => colorScale(d[currentMetric]))
+        // Functionality for interactive tooltip
         .on("mouseover", function (event, d) {
             tooltip
                 .style("display", "block")
@@ -152,7 +156,7 @@ d3.csv("temperature_daily.csv").then(data => {
             tooltip.style("display", "none");
         });
 
-    // Axes
+    // Add axes
     svg.append("g")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(xScale).tickFormat(d3.format("d")));
